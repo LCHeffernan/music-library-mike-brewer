@@ -1,11 +1,10 @@
-const express = require('exress');
+const express = require('express');
 
 const app = express();
 
 app.use(express.json());
 
-
-
-
-
+app.get('/testing', (req, res) => {
+  res.status(200).send('Hello World!');
+});
 module.exports = app;
