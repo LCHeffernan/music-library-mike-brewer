@@ -10,4 +10,6 @@ router.get('/', artistController.getAllArtists);
 
 router.get('/:id', artistController.getSingleArtist);
 
+router.patch('/:id', artistController.updateArtist);
+
 module.exports = router;
