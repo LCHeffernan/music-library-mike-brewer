@@ -1,3 +1,4 @@
+const { reset } = require('nodemon');
 const db = require('../db/index');
 
 const createArtist = async (req, res) => {
@@ -64,6 +65,50 @@ const updateArtist = async (req, res) => {
     res.status(500).json(err.message);
   }
 };
+
+const deleteArtist = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rows } = await db.query(
+      'DELETE FROM Artists WHERE id = $1 RETURNING *',
+      [id]
+    );
+    if (rows.length === 0) {
+      return res.status(404).json({message: `artist ${id} does not exist`});
+    }
+    const deletedArtist = rows[0];
+    res.status(200).json(deletedArtist);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+};
+// const deleteArtist = async (req, res) => {
+//   try {
+//   const { id } = req.params;
+//   const { rows } = await db.query('DELETE FROM Artists WHERE id = $1 RETURNING', [id]);
+   
+//   if(rows.length === 0) { 
+//     return res.status(404).json({message: `artist ${id} does not exist` });
+//    } 
+//    const deletedArtist = rows[0]
+//    res.status(200).json({deletedArtist});
+//   } catch (err) {
+//     res.status(500).json(err.message);
+//    }
+// };
+// const deleteArtist = async (req, res) => {
+//   const { id } = req.params;
+//   const { rows } = await db.query('DELETE FROM Artists WHERE id = $1 RETURNING', [id]);
+//   try {
+//     if (rows[0]) {
+//       res.status(200).json({ id: `${id}`, name: `${req.params.name}`, genre: `${req.params.genre}` });
+//     } else {
+//       res.status(404).send({ message: `artist ${id} does not exist` });
+//     }
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+
 module.exports = {
-  createArtist, getAllArtists, getSingleArtist, updateArtist,
+  createArtist, getAllArtists, getSingleArtist, updateArtist, deleteArtist,
 };
