@@ -22,15 +22,30 @@ const getAllArtists = async (_, res) => {
 
 const getSingleArtist = async (req, res) => {
   try {
-    const { rows } = await db.query(`SELECT * FROM Artists WHERE id = ${req.params.id}`);
+    const { id } = req.params;
+    const { rows } = await db.query('SELECT * FROM Artists WHERE id = $1', [id]);
     if (rows[0]) {
-      res.status(200).json(rows[0]);
-    } else {
-      res.status(404).json({ message: `artist ${req.params.id} does not exist` });
+      return res.status(200).json(rows[0]);
     }
+    res.status(404).json({ message: `artist ${id} does not exist` });
   } catch (err) {
     res.status(500).json(err.message);
   }
 };
+
+/* const getArtistById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rows: [artist] } = await db.query('SELECT * FROM Artists WHERE id = $1', [id]);
+
+    if (!artist) {
+      return res.status(404).json({ message: `artist ${id} does not exist` });
+    }
+
+    res.status(200).json(artist);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+};*/
 
 module.exports = { createArtist, getAllArtists, getSingleArtist };
