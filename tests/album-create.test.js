@@ -35,6 +35,14 @@ describe('create album', () => {
         expect(artistData.name).to.equal('Disco');
         expect(artistData.year).to.equal(2020);
       });
+
+      it('returns 404 if artistId does not exist', async () => {
+        const { status, body } = await request(app).post('/artists/99999/albums').send({
+          name: 'Disco',
+          year: 2020,
+        });
+        expect(status).to.equal(404);
+      });
     });
   });
 });

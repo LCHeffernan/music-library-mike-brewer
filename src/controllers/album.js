@@ -5,12 +5,11 @@ const createAlbum = async (req, res) => {
   const { name, year } = req.body;
   console.log(req.params.id);
   try {
-    const data = await db.query(
+    const { rows: [artist] } = await db.query(
       `SELECT * FROM Artists WHERE id = ${req.params.id}`,
     );
-
-    if (!data) {
-      res.status(404);
+    if (!artist) {
+      res.sendStatus(404);
     }
 
     const { rows: [album] } = await db.query(
