@@ -3,7 +3,7 @@ const path = require('path');
 
 const loadEnv = () => {
   const { NODE_ENV } = process.env;
-  if (NODE_ENV != 'production') {
+  if (NODE_ENV !== 'production') {
     const envFile = '../.env.test';
 
     require('dotenv').config({
