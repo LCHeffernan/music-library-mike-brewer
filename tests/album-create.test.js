@@ -15,7 +15,6 @@ describe('create album', () => {
       ]);
 
       artists = responses.map(({ rows }) => rows[0]);
-      console.log(artists);
     });
 
     describe('POST', () => {

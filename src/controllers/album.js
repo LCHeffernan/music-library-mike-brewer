@@ -3,7 +3,6 @@ const db = require('../db/index');
 
 const createAlbum = async (req, res) => {
   const { name, year } = req.body;
-  console.log(req.params.id);
   try {
     const { rows: [artist] } = await db.query(
       `SELECT * FROM Artists WHERE id = ${req.params.id}`,
@@ -22,4 +21,15 @@ const createAlbum = async (req, res) => {
   }
 };
 
-module.exports = { createAlbum };
+const readAlbum = async (req, res) => {
+  const { name, year } = req.body;
+  try {
+    const { rows: [albums] } = await db.query(
+      `SELECT * FROM Albums WHERE ${req.params.id}`,
+    );
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+};
+
+module.exports = { createAlbum, readAlbum };
