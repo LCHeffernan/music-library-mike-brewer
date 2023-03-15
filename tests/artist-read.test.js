@@ -39,8 +39,8 @@ describe('Read Artists', () => {
     });
   });
 
-  describe('GET /album/:id', () => {
-    it('returns the album with the correct id', async () => {
+  describe('GET /artists/{id}', () => {
+    it('returns the artist with the correct id', async () => {
       const { status, body } = await request(app).get(`/artists/${artists[0].id}`).send();
 
       expect(status).to.equal(200);
