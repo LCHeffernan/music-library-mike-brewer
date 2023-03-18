@@ -49,7 +49,7 @@ describe('Read Artists', () => {
 
     it('returns a 404 if the artist does not exist', async () => {
       const { status, body } = await request(app).get('/artists/999999999').send();
-
+      console.log(body);
       expect(status).to.equal(404);
       expect(body.message).to.equal('artist 999999999 does not exist');
     });

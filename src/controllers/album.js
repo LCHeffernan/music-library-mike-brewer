@@ -37,7 +37,7 @@ const albumById = async (req, res) => {
     const { rows: [album] } = await db.query('SELECT * FROM Albums WHERE id = $1', [id]);
 
     if (!album) {
-      res.send(404).json({ message: `album ${id} does not exist` });
+      res.status(404).json({ message: `The album ID: ${id} does not exist` });
     }
     res.status(200).json(album);
   } catch (err) {
