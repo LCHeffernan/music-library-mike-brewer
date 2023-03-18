@@ -76,4 +76,21 @@ const updateAlbum = async (req, res) => {
   }
 };
 
-module.exports = { createAlbum, returnedAlbums, albumById, updateAlbum };
+const deleteAlbum = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rows } = await db.query(
+      'DELETE FROM Albums WHERE id = $1 RETURNING *',
+      [id],
+    );
+    if (rows.length === 0) {
+      return res.status(404).json({message: `album ${id} does not exist`});
+    }
+    const deletedAlbum = rows[0];
+    res.status(200).json(deletedAlbum);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+};
+
+module.exports = { createAlbum, returnedAlbums, albumById, updateAlbum, deleteAlbum };
