@@ -9,4 +9,6 @@ router.get('/', albumController.returnedAlbums);
 
 router.get('/:id', albumController.albumById);
 
+router.patch('/:id', albumController.updateAlbum);
+
 module.exports = router;
