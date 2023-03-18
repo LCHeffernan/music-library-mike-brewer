@@ -1,0 +1,2 @@
+ALTER TABLE Albums
+ADD CONSTRAINT fk_artistID FOREIGN KEY (artistId) REFERENCES Artists(id)
